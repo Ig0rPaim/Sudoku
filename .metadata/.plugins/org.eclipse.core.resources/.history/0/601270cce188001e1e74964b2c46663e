@@ -1,0 +1,60 @@
+package Models;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import Enums.Genero;
+import Exeptions.NatimortoException;
+
+public abstract class Pessoa {
+	private String nome;
+	private Genero genero;
+	private Pessoa paiOuMae;
+	private List<Pessoa> filhos;
+	public String getNome() {
+		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	public Genero getGenero() {
+		return genero;
+	}
+	public void setGenero(Genero genero) {
+		this.genero = genero;
+	}
+	public Pessoa getPaiOuMae() {
+		return paiOuMae;
+	}
+	public List<Pessoa> getFilhos() {
+		return filhos;
+	}
+	public void setFilhos(Pessoa pessoa) {
+		filhos.add(pessoa);
+	}
+
+	
+	Pessoa(String nome, Genero genero, Pessoa paiOuMae, List<Pessoa> filhos) {
+		this.nome = nome;
+		this.genero = genero;
+		this.paiOuMae = paiOuMae;
+		this.filhos = filhos;
+	}
+	
+	public abstract Pessoa CadastrarFilho(Pessoa pessoa) throws NatimortoException;
+	
+	private void Find(Pessoa pessoa, List<Pessoa> p) {
+		if(paiOuMae != null) {
+			p.add(pessoa);
+			Find(paiOuMae, p);
+			return;
+		}
+		p.add(pessoa);
+	}
+	
+	public List<Pessoa> Ascendentes(){
+		List<Pessoa> p = new ArrayList<>();
+		Find(this, p);
+		return p;
+	}
+}

@@ -1,0 +1,33 @@
+package Models;
+
+import java.util.List;
+
+import Enums.Genero;
+import Enums.MortoVivo;
+import Exeptions.NatimortoException;
+import Utils.RandomMortoVivo;
+
+public class Mulher extends Pessoa{
+	public Mulher (String nome, Genero genero, Pessoa paiOuMae, List<Pessoa> filhos){
+		super(nome, genero, paiOuMae, filhos);
+	}
+	@Override
+	public Pessoa CadastrarFilho(Pessoa pessoa) throws NatimortoException {
+		if(getFilhos().size() == 1 || RandomMortoVivo.VivoOuMorto() == MortoVivo.Morto) {
+			Natimorto nat = new Natimorto(pessoa.getNome(), Genero.Natimorto, this);
+			setFilhos((Pessoa)nat);
+			return (Pessoa)nat;
+		}else {
+			if(Genero.Masculino == pessoa.getGenero()) {
+				Pessoa homem = (Homem)pessoa;
+				setFilhos((Pessoa)homem);
+				return homem;
+			}else if(Genero.Feminino == pessoa.getGenero()) {
+				Pessoa mulher = (Mulher)pessoa;
+				setFilhos((Pessoa)mulher);
+				return mulher;
+			}
+		}
+		return pessoa;
+	}
+}

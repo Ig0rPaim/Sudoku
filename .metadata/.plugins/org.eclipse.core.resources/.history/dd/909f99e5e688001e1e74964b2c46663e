@@ -1,0 +1,11 @@
+package DAO;
+
+public class ConnectionPostgres {
+	private static String url = "jdbc:postgresql://localhost:5432/";
+	private String user = "postgres";
+	private String password = "adimin123";
+	
+	public connection getConn() throws SQLException{
+		
+	}
+}
